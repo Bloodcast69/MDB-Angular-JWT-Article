@@ -5,7 +5,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppComponent} from './app.component';
 
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoginComponent} from './login/login.component';
 import {TodosComponent} from './todos/todos.component';
 import {ApiService} from './api.service';
@@ -30,6 +30,7 @@ const routes: Routes = [
     MDBBootstrapModule.forRoot(),
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [ApiService],

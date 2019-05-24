@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,9 @@ export class ApiService {
     return this.http.get(`api/todos/${id}`);
   }
 
-  public login() {
+  public login(username: string, password: string): Observable<any> {
     this._isLoggedIn = true;
+    return of(null);
   }
 
   public logout() {

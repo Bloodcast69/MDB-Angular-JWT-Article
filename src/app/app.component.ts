@@ -10,9 +10,7 @@ import {Router} from '@angular/router';
 export class AppComponent {
   isLoggedIn = false;
 
-  constructor(private apiService: ApiService, private router: Router) {
-
-  }
+  constructor(private apiService: ApiService, private router: Router) { }
 
   login() {
     this.router.navigate(['login']);

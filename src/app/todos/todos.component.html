@@ -1,4 +1,4 @@
-<h4 class="my-4">Todo list for user: USERNAME</h4>
+<h4 class="my-4">Todo list for user: {{apiService.username}}</h4>
 <ul class="list-group" *ngFor="let todo of todo$ | async">
   <li class="list-group-item">
     <!-- Default unchecked -->

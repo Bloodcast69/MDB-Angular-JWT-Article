@@ -1,35 +1,38 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private _isLoggedIn = false;
+  private _username = '';
 
-  constructor(private http: HttpClient) {
-  }
-
+  constructor(private http: HttpClient, private router: Router) { }
 
   public getTodos() {
     return this.http.get('api/todos');
   }
 
-  public getTodo(id: number) {
-    return this.http.get(`api/todos/${id}`);
-  }
-
-  public login() {
-    this._isLoggedIn = true;
+  public login(username: string, password: string) {
+    return this.http.post<{ token: string }>('/api/auth', {username: username, password: password}).pipe(
+      map(result => {
+        localStorage.setItem('access_token', result.token);
+        this._username = username;
+      }));
   }
 
   public logout() {
-    this._isLoggedIn = false;
+    localStorage.removeItem('access_token');
+    this.router.navigate(['login']);
   }
 
   public get isLoggedIn() {
-    return this._isLoggedIn;
+    return (localStorage.getItem('access_token') !== null);
   }
 
-
+  public get username() {
+    return this._username;
+  }
 }

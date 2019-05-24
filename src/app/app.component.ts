@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {ApiService} from './api.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +10,12 @@ import {ApiService} from './api.service';
 export class AppComponent {
   isLoggedIn = false;
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private router: Router) {
 
   }
 
   login() {
-    this.apiService.login();
-    this.isLoggedIn = this.apiService.isLoggedIn;
+    this.router.navigate(['login']);
   }
 
   logout() {

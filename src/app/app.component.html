@@ -10,7 +10,7 @@
       </li>
     </ul>
 
-    <a class="nav-link waves-light white-text" *ngIf="!isLoggedIn; else logged" mdbWavesEffect (click)="login()">Login</a>
+    <a class="nav-link waves-light white-text" *ngIf="!apiService.isLoggedIn; else logged" mdbWavesEffect (click)="login()">Login</a>
     <ng-template #logged>
       <a class="nav-link waves-light white-text" mdbWavesEffect (click)="logout()">Logout</a>
     </ng-template>

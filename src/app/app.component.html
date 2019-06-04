@@ -1,0 +1,27 @@
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
+  <mdb-navbar-brand><a class="navbar-brand white-text" routerLink="/">JWT App</a></mdb-navbar-brand>
+  <links>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link waves-light" mdbWavesEffect routerLink="/">Home<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-light" mdbWavesEffect routerLink="/todos">Todos</a>
+      </li>
+    </ul>
+
+    <a class="nav-link waves-light white-text" *ngIf="!isLoggedIn; else logged" mdbWavesEffect (click)="login()">Login</a>
+    <ng-template #logged>
+      <a class="nav-link waves-light white-text" mdbWavesEffect (click)="logout()">Logout</a>
+    </ng-template>
+
+  </links>
+</mdb-navbar>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto my-5">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

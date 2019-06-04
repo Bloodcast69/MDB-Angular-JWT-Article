@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const jwt = require('jsonwebtoken');
+const expressJwt = require('express-jwt');
 const app = express();
 
 const TODOS = [
@@ -11,9 +12,9 @@ const TODOS = [
 ];
 
 const USERS = [
-  {id: 1, username: 'john'},
-  {id: 2, username: 'michael'},
-  {id: 3, username: 'bob'},
+  {id: 1, username: 'john', password: 'password'},
+  {id: 2, username: 'michael', password: 'password'},
+  {id: 3, username: 'bob', password: 'password'},
 ];
 
 function getTodos(userID) {
@@ -29,6 +30,18 @@ function getUsers() {
 }
 
 app.use(bodyParser.json());
+app.use(expressJwt({secret: 'my-app-super-secret-key'}).unless({path: ['/api/auth']}));
+app.post('/api/auth', (req, res) => {
+  const body = req.body;
+
+  const user = USERS.find(user => user.username === body.username && user.password === body.password);
+  if (!user || body.password !== user.password) {
+    return res.sendStatus(401);
+  }
+
+  const token = jwt.sign({userID: user.id}, 'my-app-super-secret-key', {expiresIn: '2h'});
+  res.send({token});
+});
 
 app.get('/', (req, res) => {
   res.send('MDB Angular JWT Article');
@@ -36,8 +49,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/todos', (req, res) => {
   res.type('json');
-  console.log(getTodos(1));
-  res.send(getTodos(1));
+  res.send(getTodos(req.user.userID));
 });
 
 app.get('/api/todos/:id', (req, res) => {
